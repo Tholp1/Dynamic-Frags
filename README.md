@@ -1,7 +1,7 @@
 # Dynamic-Frags
 A sourcemod plugin for Open Fortress that dynamically adds and removes from mp_fraglimit based on player count with many customizations 
 
-License shit blah blah blah, just credit me if you redistribute 
+License shit blah blah blah, just credit me if you redistribute.
 
 Plugin has an optional requirement for morecolors.inc which can be found here: https://forums.alliedmods.net/showthread.php?t=185016
 only needed to show text in chat
