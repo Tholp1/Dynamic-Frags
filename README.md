@@ -1,5 +1,5 @@
 # Dynamic-Frags
-A sourcemod plugin for Open Fortress that dynamically adds and removes from mp_fraglimit based on player count with many customizations 
+A sourcemod (https://github.com/Scags/Open-Fortress-Tools) plugin for Open Fortress that dynamically adds and removes from mp_fraglimit based on player count with many customizations 
 
 License shit blah blah blah, just credit me if you redistribute.
 
