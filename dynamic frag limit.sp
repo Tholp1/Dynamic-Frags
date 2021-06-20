@@ -32,7 +32,7 @@ public void OnPluginStart()
  	Fragmultiplyer = CreateConVar("sm_dynamicfrags_multiplyer", "3", "( >= 1) how much to add to the frag limit per player (players * this value)");
  	tv_on = CreateConVar("sm_dynamicfrags_tv_on", "0", "(0/1) only exists because i couldnt get it to work of reading tv_enabled. turn on if you are using Sourcetv")
  	PlayerCap = CreateConVar("sm_dynamicfrags_playercap","8","( >= 1) stop adding frags when more tham the set ammount of players join")
- 	SecondstoDisable = CreateConVar("sm_dynamic_frags_timecutoff", "0", "( >= 1, set above mp_timelimit to disable )Stop adding to frag limit after this ammount of time in seconds, Doesnt account for the Wainting for players time")
+ 	SecondstoDisable = CreateConVar("sm_dynamic_frags_timecutoff", "500", "( >= 1, set above mp_timelimit to disable )Stop adding to frag limit after this ammount of time in seconds, Doesnt account for the Wainting for players time")
 }
 
 public void OnClientConnected(int client)
@@ -45,6 +45,11 @@ public void OnClientConnected(int client)
       	playersB = players
       	CPrintToChatAll("{gold}[SM Dynamic Frags] {green}Added %i {olive}to frags needed to win", Fragmultiplyer.IntValue) 
       }
+      else if(SecondstoDisable.IntValue == 0)
+       {
+      	playersB = players
+      	CPrintToChatAll("{gold}[SM Dynamic Frags] {green}Added %i {olive}to frags needed to win", Fragmultiplyer.IntValue) 
+      }
     }
 }
 public void OnClientDisconnect(int client)
@@ -53,6 +58,11 @@ public void OnClientDisconnect(int client)
     {
 		players--
  		if (second <= SecondstoDisable.IntValue)
+ 		{
+ 			playersB = players
+ 			CPrintToChatAll("{gold}[SM Dynamic Frags] {red}Removed  %i {olive}from frags needed to win", Fragmultiplyer.IntValue)
+ 		}
+ 		else if(SecondstoDisable.IntValue == 0)
  		{
  			playersB = players
  			CPrintToChatAll("{gold}[SM Dynamic Frags] {red}Removed  %i {olive}from frags needed to win", Fragmultiplyer.IntValue)
@@ -69,9 +79,9 @@ public void OnGameFrame()
 		tick = 0
 		second++
 	}
-
 	
 	
+		
 	if (PluginEnabled.IntValue > 1)
 	{
 		PluginEnabled.IntValue = 1
@@ -82,7 +92,7 @@ public void OnGameFrame()
 	} // sets the enabled convar to a 'valid' value
 	
 
-		if (PluginEnabled.IntValue == 1)
+	if (PluginEnabled.IntValue == 1)
 		{
 			int newfraglimit = maxfrags.IntValue
 			if (playersB <= PlayerCap.IntValue)
