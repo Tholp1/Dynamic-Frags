@@ -13,6 +13,7 @@ public Plugin myinfo =
 }
 static int players = 0;
 int playersB = 0;
+//int playerBuffer = 0; for future feature
 ConVar maxfrags;
 ConVar PluginEnabled = null;
 ConVar Fragmultiplyer = null;
@@ -32,7 +33,7 @@ public void OnPluginStart()
  	Fragmultiplyer = CreateConVar("sm_dynamicfrags_multiplyer", "3", "( >= 1) how much to add to the frag limit per player (players * this value)");
  	tv_on = CreateConVar("sm_dynamicfrags_tv_on", "0", "(0/1) only exists because i couldnt get it to work of reading tv_enabled. turn on if you are using Sourcetv")
  	PlayerCap = CreateConVar("sm_dynamicfrags_playercap","8","( >= 1) stop adding frags when more tham the set ammount of players join")
- 	SecondstoDisable = CreateConVar("sm_dynamic_frags_timecutoff", "500", "( >= 1, set above mp_timelimit to disable )Stop adding to frag limit after this ammount of time in seconds, Doesnt account for the Wainting for players time")
+ 	SecondstoDisable = CreateConVar("sm_dynamicfrags_timecutoff", "500", "( >= 1, set above mp_timelimit to disable )Stop adding to frag limit after this ammount of time in seconds, Doesnt account for the Wainting for players time")
 }
 
 public void OnClientConnected(int client)
@@ -51,6 +52,7 @@ public void OnClientConnected(int client)
       	CPrintToChatAll("{gold}[SM Dynamic Frags] {green}Added %i {olive}to frags needed to win", Fragmultiplyer.IntValue) 
       }
     }
+
 }
 public void OnClientDisconnect(int client)
 {
