@@ -18,4 +18,4 @@ Cvar (possible states) (default state) description
 
 *sm_dynamicfrags_playercap (>0) (8) any players that join after this ammount already have wont affect the frag limit
 
-*sm_dynamic_frags_timecutoff (>1) (500) stops adding or removing to the limit after this amount of time in seconds has passed, set this to 0 to have it change regardless.
+*sm_dynamicfrags_timecutoff (>1) (500) stops adding or removing to the limit after this amount of time in seconds has passed, set this to 0 to have it change regardless.
