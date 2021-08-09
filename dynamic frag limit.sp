@@ -1,4 +1,3 @@
-//#define REQUIRED   dunno if this is right
 #include <sourcemod>
 #include <sdktools>
 #include <morecolors>
@@ -6,7 +5,7 @@
 public Plugin myinfo =
 {
     name = "Dynamic frag limit",
-    author = "barcodescanner#6775",
+    author = "barcode scanner#6775",
     description = "Changes frag limit based on player count and set settings. Check this plugins convars",
     version = "1.3.2",
     url = "none" // 
