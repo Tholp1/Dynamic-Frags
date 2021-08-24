@@ -12,8 +12,8 @@ public Plugin myinfo =
 }
 static int players = 0;
 int playersB = 0;
-//int playerBuffer = 0; for future feature
-ConVar maxfrags;
+//int playerBuffer = 0; // for future feature (maybe, i forgot what i was going to need it for tbh)
+ConVar maxfrags = null;
 ConVar PluginEnabled = null;
 ConVar Fragmultiplyer = null;
 ConVar tv_on = null;
@@ -35,7 +35,7 @@ public void OnPluginStart()
  	SecondstoDisable = CreateConVar("sm_dynamicfrags_timecutoff", "500", "( >= 1, set above mp_timelimit to disable )Stop adding to frag limit after this ammount of time in seconds, Doesnt account for the Wainting for players time")
 }
 
-public void OnClientConnected(int client)
+public void OnClientPutInServer(int client)
 {
     if (PluginEnabled.IntValue == 1)
     {
@@ -123,4 +123,4 @@ public void OnMapEnd()
 	tick = 0
 	second = 0
 }
-
+//reset time keeping
