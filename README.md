@@ -14,7 +14,7 @@ Cvar (possible states) (default state) description
 
 *sm_dynamicfrags_multiplyer (>0) (3) how much to add to the frag limit per player
 
-*sm_dynamicfrags_tv_on (0/1) (0) only exists because some reason trying to read from tv_on dirrectly brought the server to 5 tps.
+*sm_dynamicfrags_messages (0/1) (1) enables the messages in chat from this plugin
 
 *sm_dynamicfrags_playercap (>0) (8) any players that join after this ammount already have wont affect the frag limit
 
