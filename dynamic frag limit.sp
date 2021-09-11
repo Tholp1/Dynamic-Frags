@@ -8,7 +8,7 @@ public Plugin myinfo =
     name = "Dynamic frag limit",
     author = "barcode scanner#6775",
     description = "Changes frag limit based on player count and set settings. Check this plugins convars",
-    version = "1.5.1",
+    version = "1.6.5",
     url = "none" // 
 };
 static int playersActual = 0;
@@ -17,29 +17,26 @@ int playersB = 0;
 ConVar maxfrags = null;
 ConVar PluginEnabled = null;
 ConVar Fragmultiplyer = null;
-//ConVar tv_on = null; //removed but left in incase i fuck shit up and need it back
 ConVar PlayerCap = null;
-ConVar OldFrags;
 ConVar SecondstoDisable = null;
 int tick = 0;
 int second = 0;
 ConVar DFmessages;
 int spectators = 0;
 char playername[64];
-char playername2[64];
+//char playername2[64];
 int spectatorsold = 0;
 
 public void OnPluginStart()
-{
- 	OldFrags = FindConVar("mp_fraglimit");
+{	
  	maxfrags = FindConVar("mp_fraglimit");
- 	PluginEnabled = CreateConVar("sm_dynamicfrags_enabled", "1", "(0/1) Turns dynamic frag limit on or off");
- 	Fragmultiplyer = CreateConVar("sm_dynamicfrags_multiplyer", "3", "( >= 1) How much to add to the frag limit per player (players * this value)");
- 	//tv_on = CreateConVar("sm_dynamicfrags_tv_on", "0", "(0/1) only exists because i couldnt get it to work of reading tv_enabled. turn on if you are using Sourcetv");
- 	PlayerCap = CreateConVar("sm_dynamicfrags_playercap","8","( >= 1, 0 to disable this feature) Stop adding frags when more tham the set ammount of players join");
- 	DFmessages = CreateConVar("sm_dynamicfrags_messages", "1","(0/1) Toggles messages in chat from this plugin");
- 	SecondstoDisable = CreateConVar("sm_dynamicfrags_timecutoff", "500", "( >= 1, set to 0 to disable) Stop adding to frag limit after this ammount of time in seconds, Doesnt account for the Wainting for players time");
+ 	PluginEnabled = CreateConVar("sm_dynamicfrags_enabled", "1", "(0/1) Turns dynamic frag limit on or off", FCVAR_NOTIFY);
+ 	Fragmultiplyer = CreateConVar("sm_dynamicfrags_multiplyer", "3", "( >= 1) How much to add to the frag limit per player (players * this value)", FCVAR_NOTIFY);
+ 	PlayerCap = CreateConVar("sm_dynamicfrags_playercap","8","( >= 1, 0 to disable this feature) Stop adding frags when more tham the set ammount of players join", FCVAR_NOTIFY);
+ 	DFmessages = CreateConVar("sm_dynamicfrags_messages", "1","(0/1) Toggles messages in chat from this plugin", FCVAR_NOTIFY);
+ 	SecondstoDisable = CreateConVar("sm_dynamicfrags_timecutoff", "500", "( >= 1, set to 0 to disable) Stop adding to frag limit after this ammount of time in seconds, Doesnt account for the Wainting for players time", FCVAR_NOTIFY);
 	//HookEvent("player_team", Event_TeamChange)
+	HookEvent("round_start",Event_RoundStart,EventHookMode_PostNoCopy)
 }
 
 public void OnClientAuthorized(int client)
@@ -48,40 +45,18 @@ public void OnClientAuthorized(int client)
     if (PluginEnabled.IntValue == 1)
     {
            
-      if (second <= SecondstoDisable.IntValue)
+      if (second <= SecondstoDisable.IntValue || SecondstoDisable.IntValue == 0)
       {
       	playersB = playersActual;
       	if (DFmessages.IntValue == 1)
       	{
-      		if (playersB <= PlayerCap.IntValue)
+      		if (playersB <= PlayerCap.IntValue || PlayerCap.IntValue == 0)
       		{
       			GetClientName(client, playername, sizeof(playername));
       			CPrintToChatAll("{gold}[SM Dynamic Frags] {olive} %s Joined. {green}Added %i {olive}to frags needed to win", playername, Fragmultiplyer.IntValue);
-      		}
-      		else if(PlayerCap.IntValue == 0)
-      		{
-      			GetClientName(client, playername, sizeof(playername));
-      			CPrintToChatAll("{gold}[SM Dynamic Frags] {olive} %s Joined. {green}Added %i {olive}to frags needed to win", playername, Fragmultiplyer.IntValue); 
       		}
     	 }
-      else if(SecondstoDisable.IntValue == 0)
-      {
-      	playersB = playersActual;
-      	if (DFmessages.IntValue == 1)
-      	{
-      		if (playersB <= PlayerCap.IntValue)
-      		{
-      			GetClientName(client, playername, sizeof(playername));
-      			CPrintToChatAll("{gold}[SM Dynamic Frags] {olive} %s Joined. {green}Added %i {olive}to frags needed to win", playername, Fragmultiplyer.IntValue);
-      		}
-      		else if(PlayerCap.IntValue == 0)
-      		{
-      			GetClientName(client, playername, sizeof(playername))
-      			CPrintToChatAll("{gold}[SM Dynamic Frags] {olive} %s Joined. {green}Added %i {olive}to frags needed to win", playername, Fragmultiplyer.IntValue);
-      		}
-      	}
        }
-    }
 
  }
 }
@@ -90,38 +65,20 @@ public void OnClientDisconnect(int client)
 	   playersActual--;
 	   if (PluginEnabled.IntValue == 1)
     	{
-			
- 			if (second <= SecondstoDisable.IntValue)
- 			{
- 				playersB = playersActual;
- 				if (DFmessages.IntValue == 1)
+			if (second >= 15)
+			{
+				
+
+ 				if (second <= SecondstoDisable.IntValue)
  				{
- 					if (playersB < PlayerCap.IntValue)
+ 					playersB = playersActual;
+ 					if (DFmessages.IntValue == 1 || SecondstoDisable.IntValue == 0)
  					{
- 						GetClientName(client, playername, sizeof(playername));
- 						CPrintToChatAll("{gold}[SM Dynamic Frags] {olive} %s Left. {red}Removed  %i {olive}from frags needed to win", playername, Fragmultiplyer.IntValue);
- 					}
- 					else if (PlayerCap.IntValue == 0)
- 					{
- 						GetClientName(client, playername, sizeof(playername));
- 						CPrintToChatAll("{gold}[SM Dynamic Frags] {olive} %s Left. {red}Removed  %i {olive}from frags needed to win", playername, Fragmultiplyer.IntValue);					
- 					}
- 				}
- 			}
- 			else if(SecondstoDisable.IntValue == 0)
- 			{
- 				playersB = playersActual; 
- 				if (DFmessages.IntValue == 1)
- 				{
- 					if (playersB < PlayerCap.IntValue)
- 					{
- 						GetClientName(client, playername, sizeof(playername));
- 						CPrintToChatAll("{gold}[SM Dynamic Frags] {olive} %s Left. {red}Removed  %i {olive}from frags needed to win", playername, Fragmultiplyer.IntValue);
- 					}
- 					else if(PlayerCap.IntValue == 0)
- 					{ 
- 						GetClientName(client, playername, sizeof(playername));
- 						CPrintToChatAll("{gold}[SM Dynamic Frags] {olive} %s Left. {red}Removed  %i {olive}from frags needed to win", playername, Fragmultiplyer.IntValue);					
+ 						if (playersB < PlayerCap.IntValue || PlayerCap.IntValue == 0)
+ 						{
+ 							GetClientName(client, playername, sizeof(playername));
+ 							CPrintToChatAll("{gold}[SM Dynamic Frags] {olive} %s Left. {red}Removed  %i {olive}from frags needed to win", playername, Fragmultiplyer.IntValue);
+ 						}
  					}
  				}
  			}
@@ -131,7 +88,7 @@ public void OnClientDisconnect(int client)
 
 public void OnGameFrame()
 {
-	++tick;
+	tick++;
 	if (tick >= 67)
 	{
 		tick = 0;
@@ -156,15 +113,7 @@ public void OnGameFrame()
 			if (playersB <= PlayerCap.IntValue)
 			{
 				newfraglimit = playersB * Fragmultiplyer.IntValue;
-				/*if (tv_on.IntValue >= 1)
-				{
-					newfraglimit = newfraglimit - Fragmultiplyer.IntValue;
-				};  */// unneeded with spectator removal, left in incase i mess shit up
-				if (second <= SecondstoDisable.IntValue)
-				{
-					spectators = GetTeamClientCount(1);
-				}
-				else if (SecondstoDisable.IntValue == 0)
+				if (second <= SecondstoDisable.IntValue || SecondstoDisable.IntValue == 0)
 				{
 					spectators = GetTeamClientCount(1);
 				}
@@ -177,7 +126,7 @@ public void OnGameFrame()
 			}
 			if (playersB > PlayerCap.IntValue)
 			{
-				newfraglimit = OldFrags.IntValue;
+				newfraglimit = PlayerCap.IntValue * Fragmultiplyer.IntValue;
 			}
 
 			maxfrags.IntValue = newfraglimit;
@@ -193,12 +142,23 @@ public void OnMapEnd()
 {
 	tick = 0;
 	second = 0;
-} //reset time keeping
+}//reset time keeping on map change 
 
-//catch whos chaging to spectator
+public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
+{
+ 	tick = 0
+ 	second = 0
+} // reset time on round start
+
+
+
+
+
+//catch WHO is chaging to spectator
 //Action Event_TeamChange(Event event, int client, int newteamid, int oldteamid)
 
 //events are the bane of my existance, removing this part. feel free to fix it and send it back
+
 /*
 Action Event_TeamChange(Event event, const char[] name, bool dontBroadcast)
 {
