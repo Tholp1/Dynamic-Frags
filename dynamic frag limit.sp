@@ -1,6 +1,7 @@
 #include <sourcemod>
 #include <sdktools>
 #include <morecolors>
+#include <openfortress>
 //#pragma semicolon 1
 
 public Plugin myinfo =
@@ -8,7 +9,7 @@ public Plugin myinfo =
     name = "Dynamic frag limit",
     author = "barcode scanner#6775",
     description = "Changes frag limit based on player count and set settings. Check this plugins convars",
-    version = "1.6.5",
+    version = "1.6.7",
     url = "none" // 
 };
 static int playersActual = 0;
@@ -36,7 +37,7 @@ public void OnPluginStart()
  	DFmessages = CreateConVar("sm_dynamicfrags_messages", "1","(0/1) Toggles messages in chat from this plugin", FCVAR_NOTIFY);
  	SecondstoDisable = CreateConVar("sm_dynamicfrags_timecutoff", "500", "( >= 1, set to 0 to disable) Stop adding to frag limit after this ammount of time in seconds, Doesnt account for the Wainting for players time", FCVAR_NOTIFY);
 	//HookEvent("player_team", Event_TeamChange)
-	HookEvent("round_start",Event_RoundStart,EventHookMode_PostNoCopy)
+	HookEvent("teamplay_round_start",Event_RoundStart,EventHookMode_PostNoCopy)
 }
 
 public void OnClientAuthorized(int client)
