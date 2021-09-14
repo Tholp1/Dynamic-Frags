@@ -9,7 +9,7 @@ public Plugin myinfo =
     name = "Dynamic frag limit",
     author = "barcode scanner#6775",
     description = "Changes frag limit based on player count and set settings. Check this plugins convars",
-    version = "1.6.7",
+    version = "1.6.8",
     url = "none" // 
 };
 static int playersActual = 0;
@@ -58,7 +58,13 @@ public void OnClientAuthorized(int client)
       		}
     	 }
        }
-
+	
+	if (playersActual - GetTeamClientCount(1) == 1)// reset time if the player joining is joining when the server is empty
+	{
+		tick = 0
+		second = 0
+	}
+	
  }
 }
 public void OnClientDisconnect(int client)
@@ -131,6 +137,8 @@ public void OnGameFrame()
 			}
 
 			maxfrags.IntValue = newfraglimit;
+			//PrintToServer("%i", second)//debug make sure to remove before publishing
+			
 		}
 }
 
@@ -155,7 +163,7 @@ public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 
 
 
-//catch WHO is chaging to spectator
+//catch WHO is chaging to spectator to display it in chat
 //Action Event_TeamChange(Event event, int client, int newteamid, int oldteamid)
 
 //events are the bane of my existance, removing this part. feel free to fix it and send it back
