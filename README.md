@@ -3,9 +3,6 @@ A sourcemod (https://github.com/Scags/Open-Fortress-Tools) plugin for Open Fortr
 
 License shit blah blah, just dont steal and claim as your own.
 
-Plugin has an optional requirement for morecolors.inc which can be found here: https://forums.alliedmods.net/showthread.php?t=185016
-only needed to show text in chat
-
 
 CVARS:
 Cvar (possible states) [default state] description
