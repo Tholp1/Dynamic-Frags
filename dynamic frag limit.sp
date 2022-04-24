@@ -7,7 +7,7 @@
 public Plugin myinfo =
 {
     name = "Dynamic frag limit",
-    author = "barcode scanner#6775",
+    author = "Discord: tholp#6775",
     description = "Changes frag limit based on player count and set settings. Check this plugins convars",
     version = "1.6.8",
     url = "none" // 
