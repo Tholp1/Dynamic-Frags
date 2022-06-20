@@ -55,6 +55,7 @@ public void OnPluginStart()
 	}
 
 	AutoExecConfig(true, "dynamic_frags");
+	MaxFrags.IntValue = BaseFrags.IntValue;
 }
 
 public Action DisableFraglimitModify(Handle timer)
