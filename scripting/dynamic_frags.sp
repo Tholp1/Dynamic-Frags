@@ -36,7 +36,7 @@ public void OnPluginStart()
 
 	MaxFrags         = FindConVar("mp_fraglimit");
 	PluginEnabled    = CreateConVar("sm_dynamicfrags_enabled", "1", "(0/1) Turns dynamic frag limit on or off", FCVAR_NOTIFY);
-	FragMultiplier   = CreateConVar("sm_dynamicfrags_multiplyer", "3", "( >= 1) How much to add to the frag limit per player (players * this value)", FCVAR_NOTIFY);
+	FragMultiplier   = CreateConVar("sm_dynamicfrags_multiplier", "3", "( >= 1) How much to add to the frag limit per player (players * this value)", FCVAR_NOTIFY);
 	BaseFrags        = CreateConVar("sm_dynamicfrags_basefrags", "0", "(any int) How high the frag limit is before any players join. Negative numbers will subtract from limit", FCVAR_NOTIFY);
 	PlayerCap        = CreateConVar("sm_dynamicfrags_playercap", "8", "( >= 1, 0 to disable this feature) Stop adding frags when more tham the set ammount of players join", FCVAR_NOTIFY);
 	DFmessages       = CreateConVar("sm_dynamicfrags_messages", "1", "(0/1) Toggles messages in chat from this plugin", FCVAR_NOTIFY);
