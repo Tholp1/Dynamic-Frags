@@ -53,6 +53,8 @@ public void OnPluginStart()
 	{
 		DisableTimer = CreateTimer(SecondstoDisable.FloatValue, DisableFraglimitModify, _);
 	}
+
+	AutoExecConfig(true, "dynamic_frags");
 }
 
 public Action DisableFraglimitModify(Handle timer)
