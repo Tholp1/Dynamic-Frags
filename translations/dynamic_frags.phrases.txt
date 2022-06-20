@@ -1,0 +1,32 @@
+"Phrases"
+{
+  "DisableFraglimitModify"
+  {
+    "#format" "{1:i},{2:i}"
+    "en"    "{gold}[SM Dynamic Frags] {olive}{1} Minute(s) and {2} second(s) have passed, {green}Frag limit locked!"
+  }
+
+  "ClientAuthorized"
+  {
+    "#format" "{1:s},{2:i}"
+    "en"    "{gold}[SM Dynamic Frags] {olive} {1} Joined. {green}Added {2} {olive}to frags needed to win!"
+  }
+
+  "ClientDisconnected"
+  {
+    "#format" "{1:s},{2:i}"
+    "en"    "{gold}[SM Dynamic Frags] {olive} {1} left. {red}Removed {2} {olive}from frags needed to win!"
+  }
+
+  "BecameSpectator"
+  {
+    "#format" "{1:i}"
+    "en"    "{gold}[SM Dynamic Frags] {olive}A player became a spectator. {red}Removed {1} {olive}from frags needed to win!"
+  }
+
+  "BecamePlayer"
+  {
+    "#format" "{1:i}"
+    "en"    "{gold}[SM Dynamic Frags] {olive}A player is no longer a spectator. {green}Added {1} {olive}to frags needed to win!"
+  }
+}
